@@ -6,14 +6,13 @@ import { model } from '../index';
 import * as action from '../constants/ActionTypes';
 import { getSearchData, selectActive } from '../selector';
 
-
 interface SearchTextInputProps {
   dispatch: Dispatch<{}>;
   search: model.Search;
   active: string;
 }
 interface SearchTextInputState {
-
+ 
 }
 
 class SearchTextInput extends React.Component<SearchTextInputProps, SearchTextInputState> {
@@ -50,8 +49,8 @@ class SearchTextInput extends React.Component<SearchTextInputProps, SearchTextIn
   }
 
   render() {
-    const { search } = this.props;
-    let placeholder = search.value ? search.value : 'Search';
+    const { search, active } = this.props;
+    let placeholder = (search.value && !active) ? search.value : (active && search.mode) ? active : 'Search...';
     return (
       <Input fluid
         placeholder={placeholder}

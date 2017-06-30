@@ -1,2 +1,2 @@
-import 'todomvc-app-css/index.css';
+import './bootstrap-reboot.css';
 import './main';
