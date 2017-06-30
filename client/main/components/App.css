@@ -1,0 +1,8 @@
+.container {
+  padding-top: 20px;
+  box-sizing:border-box;
+  display: flex;
+  flex-flow: column nowrap;
+  justify-content: flex-start;
+  align-content: center;
+}
