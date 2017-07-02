@@ -25,11 +25,6 @@ class SearchTextOutput extends React.Component<SearchTextOutputProps, SearchText
     dispatch({type: action.FLUSH_SEARCH});
   }
 
-  handleBlur(e) {
-    const { dispatch } = this.props;
-    dispatch({type: action.FLUSH_SEARCH})
-  }
-
   render() {
     const { search, findData, activeIndex } = this.props;
       if ( search.mode && findData ) {
@@ -38,13 +33,12 @@ class SearchTextOutput extends React.Component<SearchTextOutputProps, SearchText
       <Menu vertical fluid borderless>
           {findData.map((item, i) => {
             return (
-              <div key={i}>
+              <div key={i.toString()}>
               <Menu.Item
                 name={item}
                 value={item}
                 active={activeIndex === i}
                 onClick={this.handleClick.bind(this)}
-                onBlur={this.handleBlur.bind(this)}
                 >
                 </Menu.Item>
               </div>
