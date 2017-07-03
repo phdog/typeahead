@@ -6,11 +6,9 @@ import {
   Input,
   Output
 } from '../../search';
-import { model } from '../../search';
 import './App.css';
 
 interface AppProps {
-  search: model.Search;
   dispatch: Dispatch<{}>;
 }
 
@@ -18,7 +16,7 @@ class App extends React.Component<AppProps, void> {
 
   handleMouseDown(e) {
     const { dispatch } = this.props;
-    if (e.target.className === 'page')
+    if (e.target.className !== 'item')
     dispatch({type: action.FLUSH_SEARCH})
   }
 
