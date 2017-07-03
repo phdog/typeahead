@@ -1,3 +1,8 @@
+.page {
+  width: 100vw;
+  height: 100vh;
+}
+
 .container {
   padding-top: 20px;
   width: 60vw;

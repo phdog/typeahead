@@ -13,11 +13,8 @@ interface SearchTextOutputProps {
   activeIndex: number;
   active: string;
 }
-interface SearchTextOutputState {
 
-}
-
-class SearchTextOutput extends React.Component<SearchTextOutputProps, SearchTextOutputState> {
+class SearchTextOutput extends React.Component<SearchTextOutputProps, void> {
 
   handleClick(e) {
     const { dispatch, active }  = this.props;
@@ -27,9 +24,8 @@ class SearchTextOutput extends React.Component<SearchTextOutputProps, SearchText
 
   render() {
     const { search, findData, activeIndex } = this.props;
-      if ( search.mode && findData ) {
     return (
-      <div>
+      search.mode && findData &&
       <Menu vertical fluid borderless>
           {findData.map((item, i) => {
             return (
@@ -46,9 +42,7 @@ class SearchTextOutput extends React.Component<SearchTextOutputProps, SearchText
           })
         }
       </Menu>
-      </div>
     );
-  } else { return null; }
   }
 }
 

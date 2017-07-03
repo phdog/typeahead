@@ -11,11 +11,8 @@ interface SearchTextInputProps {
   search: model.Search;
   active: string;
 }
-interface SearchTextInputState {
- 
-}
 
-class SearchTextInput extends React.Component<SearchTextInputProps, SearchTextInputState> {
+class SearchTextInput extends React.Component<SearchTextInputProps, void> {
 
 
   handleKeyDown(target) {
@@ -35,7 +32,6 @@ class SearchTextInput extends React.Component<SearchTextInputProps, SearchTextIn
           dispatch({ type: action.FLUSH_SEARCH });
           break;
       }
-
     }
 
   handleChange(e) {
