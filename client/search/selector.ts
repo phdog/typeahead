@@ -29,8 +29,8 @@ export const selectFindData = createSelector(getSearchData, getSearchText, getSe
 
 export const selectActiveIndex = createSelector(getSearchItem, selectFindData, (item, findData) => {
   let Item;
-  const min = 0;
-  let max = findData.length + 1;
+  const min = 1;
+  let max = findData.length + min + 1;
   let range = max - min;
   Item = (item - min) % range;
   if (Item < 0) { return Math.abs(Item + range) } else { return Math.abs(Item) }

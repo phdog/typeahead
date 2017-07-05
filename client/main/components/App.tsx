@@ -14,16 +14,16 @@ interface DispatchProps {
 
 class App extends React.Component<DispatchProps, void> {
 
-  handleMouseDown(e) {
+  handleMouseDown = (e) => {
     if (e.target.className !== 'item') {
-      this.props.flushSearch();
+  //    this.props.flushSearch();
     }
   }
 
   render() {
 
     return (
-      <div className='page' onMouseDown={this.handleMouseDown.bind(this)}>
+      <div className='page' onMouseDown={this.handleMouseDown}>
         <div className='container'>
             <Input />
             <Output />

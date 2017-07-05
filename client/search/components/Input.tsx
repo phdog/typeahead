@@ -1,7 +1,7 @@
+import './Input.css';
 import * as React from 'react';
 import { Dispatch } from 'redux';
 import { connect } from 'react-redux';
-import { Input } from 'semantic-ui-react';
 import { model } from '../index';
 import * as action from '../constants/ActionTypes';
 import { getSearchData, selectActive } from '../selector';
@@ -14,11 +14,11 @@ interface SearchTextInputProps {
 
 class SearchTextInput extends React.Component<SearchTextInputProps, void> {
 
-
-  handleKeyDown(target) {
+  handleKeyDown = (e) => {
       const { dispatch, active } = this.props;
-      switch(target.keyCode) {
+      switch(e.keyCode) {
         case 13: //Enter
+          e.preventDefault();
           dispatch({ type: action.PICK_SEARCH, payload: active})
           dispatch({ type: action.FLUSH_SEARCH });
           break;
@@ -34,12 +34,12 @@ class SearchTextInput extends React.Component<SearchTextInputProps, void> {
       }
     }
 
-  handleChange(e) {
+  handleChange = (e) => {
     const { dispatch } = this.props;
     dispatch({ type: action.TRIGGER_SEARCH, payload: e.target.value })
   }
 
-  handleFocus() {
+  handleFocus = () => {
     const { dispatch } = this.props;
     dispatch({type: action.START_SEARCH})
   }
@@ -48,14 +48,17 @@ class SearchTextInput extends React.Component<SearchTextInputProps, void> {
     const { search, active } = this.props;
     let placeholder = (search.value && !active) ? search.value : (active && search.mode) ? active : 'Search...';
     return (
-      <Input fluid
-        placeholder={placeholder}
-        icon={{ name: 'search', circular: true, link: true }}
-        onChange={this.handleChange.bind(this)}
-        onFocus={this.handleFocus.bind(this)}
-        value={search.text}
-        onKeyDown={this.handleKeyDown.bind(this)}
-      />
+      <form>
+        <input
+          type='text'
+          name='typeahead'
+          placeholder={placeholder}
+          value={search.text}
+          onChange={this.handleChange}
+          onKeyDown={this.handleKeyDown}
+          onFocus={this.handleFocus}
+        />
+      </form>
     );
   }
 }
