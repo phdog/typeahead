@@ -5,6 +5,13 @@ import { connect } from 'react-redux';
 import { model } from '../index';
 import * as action from '../constants/ActionTypes';
 import { getSearchData, selectActive } from '../selector';
+import {
+  triggerSearch,
+  startSearch,
+  flushSearch,
+  pickSearch,
+  searchUp,
+  searchDown } from '../actions';
 
 interface SearchTextInputProps {
   dispatch: Dispatch<{}>;
@@ -12,42 +19,52 @@ interface SearchTextInputProps {
   active: string;
 }
 
-class SearchTextInput extends React.Component<SearchTextInputProps, void> {
+interface DispatchProps {
+  triggerSearch: Function;
+  startSearch: Function;
+  flushSearch: Function;
+  pickSearch: Function;
+  searchUp: Function;
+  searchDown: Function;
+}
 
-  handleKeyDown = (e) => {
-      const { dispatch, active } = this.props;
+class SearchTextInput extends React.Component<SearchTextInputProps & DispatchProps, void> {
+
+  private handleKeyDown = (e) => {
+      const { active, flushSearch, pickSearch, searchUp, searchDown } = this.props;
       switch(e.keyCode) {
         case 13: //Enter
           e.preventDefault();
-          dispatch({ type: action.PICK_SEARCH, payload: active})
-          dispatch({ type: action.FLUSH_SEARCH });
+          pickSearch(active)
+          flushSearch();
           break;
         case 40:
-          dispatch({ type: action.SEARCH_UP });
+          searchUp();
           break;
         case 38:
-          dispatch({ type: action.SEARCH_DOWN });
+          searchDown();
           break;
         case 27: //Escape
-          dispatch({ type: action.FLUSH_SEARCH });
+        flushSearch();
           break;
       }
     }
 
-  handleChange = (e) => {
-    const { dispatch } = this.props;
-    dispatch({ type: action.TRIGGER_SEARCH, payload: e.target.value })
+  private handleChange = (e) => {
+    const { triggerSearch } = this.props;
+    triggerSearch(e.target.value)
   }
 
-  handleFocus = () => {
-    const { dispatch } = this.props;
-    dispatch({type: action.START_SEARCH})
+  private handleFocus = () => {
+    const { startSearch } = this.props;
+    startSearch();
   }
 
   render() {
     const { search, active } = this.props;
     let placeholder = (search.value && !active) ? search.value : (active && search.mode) ? active : 'Search...';
     return (
+      <div className='input'>
       <form>
         <input
           type='text'
@@ -59,15 +76,23 @@ class SearchTextInput extends React.Component<SearchTextInputProps, void> {
           onFocus={this.handleFocus}
         />
       </form>
+      </div>
     );
   }
 }
 
-function mapStateToProps(state) {
-  return {
+const mapStateToProps = (state) => ({
     search: state.search,
     active: selectActive(state)
-  }
-}
+})
 
-export default connect(mapStateToProps)(SearchTextInput);
+const mapDispatchToProps = (dispatch: Dispatch<{}>): DispatchProps => ({
+  triggerSearch: (text: string) => { dispatch(triggerSearch(text)); },
+  startSearch: () => { dispatch(startSearch()); },
+  flushSearch: () => { dispatch(flushSearch()); },
+  pickSearch: (text: string) => { dispatch(pickSearch(text)); },
+  searchUp: () => { dispatch(searchUp()); },
+  searchDown: () => { dispatch(searchDown()); }
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(SearchTextInput);

@@ -2,6 +2,7 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import { Store, applyMiddleware, compose, createStore } from 'redux';
 import { Provider } from 'react-redux';
+import ReduxThunk from 'redux-thunk';
 import { createLogger } from 'redux-logger';
 
 import App from './main/components/App';
@@ -11,7 +12,7 @@ const loggerMiddleware = createLogger({
   collapsed: (getState, action, logEntry) => !logEntry.error
 });
 
-const store: Store<any> = compose(applyMiddleware(loggerMiddleware))(createStore)(rootReducer);
+export const store: Store<any> = compose(applyMiddleware(ReduxThunk, loggerMiddleware))(createStore)(rootReducer);
 
 ReactDOM.render(
   <Provider store={store}>

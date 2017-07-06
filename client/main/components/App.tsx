@@ -2,6 +2,7 @@ import { Dispatch } from 'redux';
 import { connect } from 'react-redux';
 import * as React from 'react';
 import { flushSearch } from '../../search/actions';
+import { fetchData } from '../../data/actions';
 import {
   Input,
   Output
@@ -9,15 +10,20 @@ import {
 import './App.css';
 
 interface DispatchProps {
-  flushSearch: Function
+  fetchData: Function;
+  flushSearch: Function;
 }
 
 class App extends React.Component<DispatchProps, void> {
 
+  componentWillMount() {
+    const { fetchData } = this.props;
+    fetchData();
+  }
+
   handleMouseDown = (e) => {
-    if (e.target.className !== 'item') {
-  //    this.props.flushSearch();
-    }
+    const { flushSearch } = this.props;
+    e.target.className.includes('menu') || flushSearch();
   }
 
   render() {
@@ -34,9 +40,8 @@ class App extends React.Component<DispatchProps, void> {
 }
 
 const mapDispatchToProps = (dispatch: Dispatch<{}>): DispatchProps => ({
-  flushSearch: () => {
-    dispatch(flushSearch());
-  }
+  fetchData: () => { dispatch(fetchData()); },
+  flushSearch: () => { dispatch(flushSearch()); }
 });
 
 export default connect(null, mapDispatchToProps)(App);
