@@ -17,6 +17,7 @@ interface SearchTextInputProps {
   dispatch: Dispatch<{}>;
   search: model.Search;
   active: string;
+  loading: boolean;
 }
 
 interface DispatchProps {
@@ -61,8 +62,8 @@ class SearchTextInput extends React.Component<SearchTextInputProps & DispatchPro
   }
 
   render() {
-    const { search, active } = this.props;
-    let placeholder = (search.value && !active) ? search.value : (active && search.mode) ? active : 'Search...';
+    const { search, active, loading } = this.props;
+    let placeholder = (search.value && !active) ? search.value : (active && search.mode) ? active : loading ? 'Loading...' : 'Search...';
     return (
       <div className='input'>
       <form>
@@ -74,6 +75,7 @@ class SearchTextInput extends React.Component<SearchTextInputProps & DispatchPro
           onChange={this.handleChange}
           onKeyDown={this.handleKeyDown}
           onFocus={this.handleFocus}
+          disabled={loading}
         />
       </form>
       </div>
@@ -83,6 +85,7 @@ class SearchTextInput extends React.Component<SearchTextInputProps & DispatchPro
 
 const mapStateToProps = (state) => ({
     search: state.search,
+    loading: state.ui.loading,
     active: selectActive(state)
 })
 

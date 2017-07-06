@@ -17,6 +17,11 @@ input[type="text"]:focus {
   outline: none;
   border: 2px solid #42891A;
 }
+input[type="text"]:disabled {
+  outline: none;
+  background-color: lightgrey;
+  border: 2px solid lightgrey;
+}
 
 .menu {
   background-color: white;
