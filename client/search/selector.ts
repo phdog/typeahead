@@ -4,10 +4,7 @@ import { slice } from 'lodash';
 export const getSearchMode = state => state.search.mode;
 export const getSearchText = state => state.search.text;
 export const getSearchItem = state => state.search.item;
-export const getSearchData = () => { return [
-  'sweets', 'cake', 'pie', 'muffin', 'chocolate', 'pancake', 'ice cream', 'smothie', 'cotton candy', 'bisquits', 'donuts',
-  'lollipop', 'lemonade', 'pizza', 'popcorn', 'marmelade', 'mashmallow', 'fizzy drinks', 'cup cake', 'cookies'
-]}
+export const getSearchData = state => state.data;
 
 export const selectFindData = createSelector(getSearchData, getSearchText, getSearchMode, (searchData, text, mode) => {
   const maxItems = 7;
@@ -28,9 +25,12 @@ export const selectFindData = createSelector(getSearchData, getSearchText, getSe
 })
 
 export const selectActiveIndex = createSelector(getSearchItem, selectFindData, (item, findData) => {
-  let max = findData.length + 1;
-  let Item = item % max;
-  if (Item < 0) { return Math.abs(Item + max) } else { return Math.abs(Item) }
+  let Item;
+  const min = 1;
+  let max = findData.length + min + 1;
+  let range = max - min;
+  Item = (item - min) % range;
+  if (Item < 0) { return Math.abs(Item + range) } else { return Math.abs(Item) }
 })
 
 export const selectActive = createSelector(selectActiveIndex, selectFindData, (activeIndex, findData) => {

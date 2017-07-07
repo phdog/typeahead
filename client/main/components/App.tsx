@@ -1,36 +1,50 @@
 import { Dispatch } from 'redux';
 import { connect } from 'react-redux';
 import * as React from 'react';
-import * as action from '../../search/constants/ActionTypes';
+import { flushSearch } from '../../search/actions';
+import { fetchData } from '../../data/actions';
 import {
   Input,
   Output
 } from '../../search';
-import './App.css';
 
-interface AppProps {
-  dispatch: Dispatch<{}>;
+interface DispatchProps {
+  fetchData: Function;
+  flushSearch: Function;
 }
 
-class App extends React.Component<AppProps, void> {
+class App extends React.Component<DispatchProps, void> {
 
-  handleMouseDown(e) {
-    const { dispatch } = this.props;
-    if (e.target.className !== 'item')
-    dispatch({type: action.FLUSH_SEARCH})
+  componentWillMount() {
+    const { fetchData } = this.props;
+    fetchData();
+  }
+
+  handleMouseDown = (e) => {
+    const { flushSearch } = this.props;
+    e.target.className.includes('menu') || flushSearch();
   }
 
   render() {
 
     return (
-      <div className='page' onMouseDown={this.handleMouseDown.bind(this)}>
-      <div className='container'>
-          <Input />
-          <Output />
-      </div>
+      <div className='page' onMouseDown={this.handleMouseDown}>
+        <div className='container'>
+          <div>
+            <Input />
+          </div>
+          <div>
+            <Output />
+          </div>
+        </div>
       </div>
     );
   }
 }
 
-export default connect(null)(App);
+const mapDispatchToProps = (dispatch: Dispatch<{}>): DispatchProps => ({
+  fetchData: () => { dispatch(fetchData()); },
+  flushSearch: () => { dispatch(flushSearch()); }
+});
+
+export default connect(null, mapDispatchToProps)(App);
