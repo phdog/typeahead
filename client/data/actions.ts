@@ -1,17 +1,25 @@
 import axios from 'axios';
 import * as action from './constants/ActionTypes';
 import { resSend, reqRecieved } from '../ui/actions';
-import { store } from '../main';
+import config from './constants/config';
 
-const URL = 'http://localhost:3001/';
+const options = {
+  headers: { 'Content-Type': 'application/json' },
+  timeout: config.TIMEOUT
+};
 
 const fetchData = () => {
-  return () => {
-    const request = axios.get(`${URL}dessert`);
-    store.dispatch(resSend());
-    request.then((data) => {
-      store.dispatch(reqRecieved());
-      store.dispatch(pushData(data.data));
+  return (dispatch) => {
+    const request = axios.get(`${config.URL}dessert`, options);
+    dispatch(resSend());
+    request.then((response) => {
+      try {
+        dispatch(pushData(response.data));
+      } catch (e) {
+        throw e
+      } finally {
+        dispatch(reqRecieved());
+      }
     }).catch(e => {
       console.log(e)
     })

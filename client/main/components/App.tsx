@@ -7,7 +7,6 @@ import {
   Input,
   Output
 } from '../../search';
-import './App.css';
 
 interface DispatchProps {
   fetchData: Function;
@@ -31,8 +30,12 @@ class App extends React.Component<DispatchProps, void> {
     return (
       <div className='page' onMouseDown={this.handleMouseDown}>
         <div className='container'>
+          <div>
             <Input />
+          </div>
+          <div>
             <Output />
+          </div>
         </div>
       </div>
     );

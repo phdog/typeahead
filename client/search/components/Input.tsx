@@ -1,4 +1,3 @@
-import './Input.css';
 import * as React from 'react';
 import { Dispatch } from 'redux';
 import { connect } from 'react-redux';
