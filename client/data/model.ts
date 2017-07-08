@@ -1,1 +1,1 @@
-export type Data = [string];
+export type Data = string[];
