@@ -1,24 +1,16 @@
 {
   "dessert": [
-    "sweets",
-    "cake",
-    "pie",
-    "muffin",
-    "chocolate",
-    "pancake",
-    "ice cream",
-    "smothie",
-    "cotton candy",
-    "bisquits",
-    "donuts",
-    "lollipop",
-    "lemonade",
-    "pizza",
-    "popcorn",
-    "marmelade",
-    "mashmallow",
-    "fizzy drinks",
-    "cup cake",
-    "cookies"
+    { "id": "e9732d18888",
+      "name": "sweets",
+      "recipe": "Go buy some"
+    },
+    { "id": "e9a35d17882",
+      "name": "cake",
+      "recipe": "Eggs, flour, sugar"
+    },
+    { "id": "e8a15d1eeee",
+      "name": "pie",
+      "recipe": "Same as cake"
+    }
   ]
 }

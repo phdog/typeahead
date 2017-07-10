@@ -13,9 +13,9 @@ const triggerSearch = (text) => ({
   payload: text
 })
 
-const pickSearch = (text) => ({
+const pickSearch = (key) => ({
   type: action.PICK_SEARCH,
-  payload: text
+  payload: key
 })
 
 export {

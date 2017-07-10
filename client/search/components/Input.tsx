@@ -3,7 +3,10 @@ import { Dispatch } from 'redux';
 import { connect } from 'react-redux';
 import { model } from '../index';
 import * as action from '../constants/ActionTypes';
-import { getSearchData, selectActive } from '../selector';
+import {
+  getSearchData,
+  selectActive,
+  selectPlaceholder } from '../selector';
 import {
   triggerSearch,
   startSearch,
@@ -14,8 +17,9 @@ import {
 
 interface SearchTextInputProps {
   dispatch: Dispatch<{}>;
+  placeholder: string;
   search: model.Search;
-  active: string;
+  active: {key: string, value: string};
   loading: boolean;
 }
 
@@ -35,7 +39,7 @@ class SearchTextInput extends React.Component<SearchTextInputProps & DispatchPro
       switch(e.keyCode) {
         case 13: //Enter
           e.preventDefault();
-          pickSearch(active)
+          pickSearch(active.key)
           flushSearch();
           break;
         case 40:
@@ -61,8 +65,7 @@ class SearchTextInput extends React.Component<SearchTextInputProps & DispatchPro
   }
 
   render() {
-    const { search, active, loading } = this.props;
-    let placeholder = (search.value && !active) ? search.value : (active && search.mode) ? active : loading ? 'Loading...' : 'Search...';
+    const { search, loading, placeholder } = this.props;
     return (
       <div className='input'>
       <form>
@@ -83,6 +86,7 @@ class SearchTextInput extends React.Component<SearchTextInputProps & DispatchPro
 }
 
 const mapStateToProps = (state) => ({
+    placeholder: selectPlaceholder(state),
     search: state.search,
     loading: state.ui.loading,
     active: selectActive(state)

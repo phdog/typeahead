@@ -9,7 +9,7 @@ import { pickSearch, flushSearch } from '../actions';
 interface SearchTextOutputProps {
   dispatch: Dispatch<{}>;
   search: model.Search;
-  findData: [string];
+  findData: [{ key: string, value: string}];
   activeIndex: number;
   active: string;
 }
@@ -36,12 +36,12 @@ class SearchTextOutput extends React.Component<SearchTextOutputProps & DispatchP
         let className = activeIndex === i ? 'menu__active' : 'menu__inactive'
         return (
           <a
-            key={i.toString()}
-            value={item}
+            key={item.key}
+            value={item.key}
             onClick={this.handleClick}
             className={className}
             >
-            {item}
+            {item.value}
           </a>
         )
       })
