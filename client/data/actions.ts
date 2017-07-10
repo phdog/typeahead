@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { map, transform, assign, reduce } from 'lodash';
+import { map } from 'lodash';
 import * as action from './constants/ActionTypes';
 import { resSend, reqRecieved } from '../ui/actions';
 import config from './constants/config';
@@ -9,7 +9,7 @@ const options = {
   timeout: config.TIMEOUT
 };
 
-interface obj {
+interface IDataObj {
   id: string;
   name: string;
   recipe: string;
@@ -21,12 +21,13 @@ const fetchData = () => {
     dispatch(resSend());
     request.then((response) => {
       try {
-        // Normilize data
+        // Нормализовать данные. Массив из ID и объекты с ключами ID
         let keys = map(response.data, 'id');
         let values = {};
-        map(response.data, (obj: obj) => {
+        map(response.data, (obj: IDataObj) => {
           Object.defineProperty(values, obj.id, {value: obj, enumerable: true});
         });
+        //--------------
         dispatch(pushData({keys, values}));
       } catch (e) {
         throw e
@@ -44,6 +45,11 @@ const pushData = (data) => ({
   payload: data
 })
 
+const editData = (data) => ({
+  type: action.EDIT_DATA,
+  payload: data
+})
+
 export {
-    fetchData
+    fetchData, editData
 };

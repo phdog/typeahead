@@ -7,6 +7,7 @@ import {
   Input,
   Output
 } from '../../search';
+import { Card } from '../../data';
 
 interface DispatchProps {
   fetchData: Function;
@@ -30,10 +31,13 @@ class App extends React.Component<DispatchProps, void> {
     return (
       <div className='page' onMouseDown={this.handleMouseDown}>
         <div className='container'>
-          <div>
+          <div className='search'>
             <Input />
           </div>
           <div>
+            <Card />
+          </div>
+          <div className='find'>
             <Output />
           </div>
         </div>

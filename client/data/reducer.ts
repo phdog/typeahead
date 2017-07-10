@@ -13,6 +13,9 @@ export default function(state = INITIAL_STATE, action) {
     case PUSH_DATA:
       const { keys, values } = action.payload;
       return SI.from(state).merge({keys, values}, {deep: true})
+    case EDIT_DATA:
+      const { id, field, value } = action.payload;
+      return SI.from(state).setIn(['values', id, field], value)
   }
   return state;
 }
