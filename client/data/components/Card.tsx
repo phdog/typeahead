@@ -1,11 +1,17 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
-import { selectSearchValue, getSearchValue, getSearchData, selectFindData } from '../../search/selector';
+import {
+  selectSearchValue,
+  getSearchData,
+  selectFindData,
+  selectId } from '../../search/selector';
+import { selectIdFromPath } from '../selector';
 import { edit, arrow } from '../../style/img/';
 
-import { triggerEdit, flushEdit } from '../../ui/actions';
-import { editData, putData, fetchData, deleteData } from '../actions';
+import { triggerEdit, flushEdit, startAdd } from '../../ui/actions';
+import { flushSearch } from '../../search/actions';
+import { editData, putData, fetchData, deleteData, newNode } from '../actions';
 
 import Buttons from './Buttons';
 
@@ -16,7 +22,8 @@ interface IState {
   data: {};
   search: { mode: boolean, value: string };
   findData: [{}];
-  loading: boolean
+  loading: boolean;
+  add: boolean;
 }
 
 interface DispatchProps {
@@ -26,15 +33,20 @@ interface DispatchProps {
   putData: Function;
   fetchData: Function;
   deleteData: Function;
+  flushSearch: Function;
+  newNode: Function;
+  startAdd: Function;
 }
 
 class Card extends React.Component<IState & DispatchProps, void> {
 
 // Отрисовать иконку поля редактирование в разных режимах
   private renderIcon(form_field) {
-    const { field } = this.props;
+    const { field, add } = this.props;
     if (field && field === form_field) {
       return <img src={arrow}/>
+    } else if (add) {
+      return null;
     } else {
       return <img src={edit}/>
     }
@@ -42,10 +54,11 @@ class Card extends React.Component<IState & DispatchProps, void> {
 
 // Отрисовать значение или поле для редактирования в разных режимах
   private renderField(form_field) {
-    const { value, id, field, data } = this.props;
-    if (field && field === form_field) {
+    const { value, id, field, data, add, triggerEdit } = this.props;
+    if (field && field === form_field || add) {
       return (
         <input
+          onFocus={() => {triggerEdit(form_field)}}
           type='text'
           name={field}
           value={value[form_field]}
@@ -68,7 +81,7 @@ private handleKeyPress = (target) => {
 
 // Изменение данных в Сторе
   private handleInput = (e) => {
-    const { field, id, editData } = this.props;
+    let { field, id, editData } = this.props;
     editData({
       id,
       field,
@@ -86,9 +99,18 @@ private handleKeyPress = (target) => {
     }
   }
 
+// Добавить новый элемент в список
+  private addNew = () => {
+    const { flushEdit, flushSearch, newNode, startAdd } = this.props;
+    flushEdit();
+    flushSearch();
+    startAdd();
+    newNode();
+  }
+
   render() {
-    const { search, putData, id, fetchData, deleteData, loading } = this.props
-    if  (!search.mode && search.value && !loading) {
+    const { search, putData, id, fetchData, deleteData, loading, add } = this.props
+    if  ((!search.mode && search.value && !loading) || add ) {
       return (
         <div className='card'>
         <Buttons
@@ -96,7 +118,7 @@ private handleKeyPress = (target) => {
           name1='Add new'
           name2='Delete'
           id={id}
-          func1={putData}
+          func1={this.addNew}
           func2={deleteData} />
 
         <form>
@@ -145,11 +167,12 @@ private handleKeyPress = (target) => {
 const mapStateToProps = (state) => ({
   search: state.search,
   findData: selectFindData(state),
-  id: getSearchValue(state),
+  id: selectIdFromPath(state),
   value: selectSearchValue(state),
   field: state.ui.field,
   data: getSearchData(state),
-  loading: state.ui.loading
+  loading: state.ui.loading,
+  add: state.ui.add
 })
 
 const mapDispatchToProps = (dispatch: Dispatch<{}>): DispatchProps => ({
@@ -158,7 +181,10 @@ const mapDispatchToProps = (dispatch: Dispatch<{}>): DispatchProps => ({
   flushEdit: () => {dispatch(flushEdit())},
   putData: (payload: string) => {dispatch(putData(payload))},
   fetchData: () => {dispatch(fetchData())},
-  deleteData: (id: string) => {dispatch(deleteData(id))}
+  deleteData: (id: string) => {dispatch(deleteData(id))},
+  flushSearch: () => {dispatch(flushSearch())},
+  newNode: () => {dispatch(newNode())},
+  startAdd: () => {dispatch(startAdd())}
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Card);

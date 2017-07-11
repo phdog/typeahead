@@ -22,6 +22,8 @@ import {
   searchUp,
   searchDown } from '../actions';
 
+  import { stopAdd } from '../../ui/actions';
+
 interface IState {
   dispatch: Dispatch<{}>;
   placeholder: string;
@@ -39,6 +41,7 @@ interface DispatchProps {
   pickSearch: Function;
   searchUp: Function;
   searchDown: Function;
+  stopAdd: Function;
 }
 
 class SearchTextInput extends React.Component<IState & DispatchProps, void> {
@@ -72,7 +75,8 @@ class SearchTextInput extends React.Component<IState & DispatchProps, void> {
   }
 
   private handleFocus = () => {
-    const { startSearch } = this.props;
+    const { startSearch, stopAdd } = this.props;
+    stopAdd();
     startSearch();
   }
 
@@ -112,7 +116,8 @@ const mapDispatchToProps = (dispatch: Dispatch<{}>): DispatchProps => ({
   stopSearch: () => { dispatch(stopSearch()); },
   pickSearch: (text: string) => { dispatch(pickSearch(text)); },
   searchUp: () => { dispatch(searchUp()); },
-  searchDown: () => { dispatch(searchDown()); }
+  searchDown: () => { dispatch(searchDown()); },
+  stopAdd: () => {dispatch(stopAdd())}
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(SearchTextInput);

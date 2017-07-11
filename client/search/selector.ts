@@ -1,5 +1,6 @@
 import { createSelector } from 'reselect';
 import { slice } from 'lodash';
+import { selectIdFromPath } from '../data/selector';
 
 export const getSearchMode = state => state.search.mode;
 export const getSearchText = state => state.search.text;
@@ -49,6 +50,16 @@ export const selectSearchValue = createSelector(getSearchValue, getSearchData, (
   } else {
     return {}
   }
+})
+
+// Вычислить какой ID использовать - имеющийся или сгенерировать новый
+export const selectId = createSelector(getSearchValue, selectIdFromPath, getSearchMode, (valueId, pathId, mode) => {
+   /*if (pathId === 'add' && !mode) {
+    const id = keygen.hex(keygen.small)
+    return id;
+  } else { */
+    return valueId;
+//  }
 })
 
 // Вычислить активный индекс на основе сформированного списка данных

@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { map } from 'lodash';
+import * as Chance from 'chance';
 import { browserHistory } from 'react-router';
 import * as action from './constants/ActionTypes';
 import { reqSend, resRecieved } from '../ui/actions';
@@ -59,11 +60,23 @@ const editData = (data) => ({
   payload: data
 })
 
+// Создать схему для нового элемента данных в Сторе, переключить режим
+const newNode = () => {
+  const chance = new Chance();
+  const id = chance.guid();
+  browserHistory.push(`/${id}`)
+  return {
+    type: action.NEW_NODE,
+    payload: { keys: [id], values: {[id]: {id, name: '', recipe: ''}}}
+  }
+}
+
 // Обновить данные на сервере
 const putData = (id: string) => {
   return (dispatch) => {
     const storeOnSave = store.getState();
     const data = storeOnSave.data.values[id];
+    console.log(data)
     const request = axios.put(`${config.URL}dessert/${id}`, data, options);
     dispatch(reqSend());
     request.then(response => {
@@ -80,6 +93,7 @@ const putData = (id: string) => {
   }
 }
 
+// Удалить элемент на сервере и актуализировать Стор
 const deleteData = (id: string) => {
   return (dispatch) => {
     const request = axios.delete(`${config.URL}dessert/${id}`, options)
@@ -101,5 +115,5 @@ const deleteData = (id: string) => {
 }
 
 export {
-    fetchData, editData, putData, deleteData
+    fetchData, editData, putData, deleteData, newNode
 };

@@ -9,9 +9,15 @@ const triggerEdit = (field) => ({
   payload: field
 })
 
+const startAdd = () => ({ type: action.START_ADD})
+
+const stopAdd = () => ({ type: action.STOP_ADD})
+
 export {
   reqSend,
   resRecieved,
   triggerEdit,
-  flushEdit
+  flushEdit,
+  startAdd,
+  stopAdd
 }
