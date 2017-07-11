@@ -71,6 +71,28 @@ const newNode = () => {
   }
 }
 
+// Закинуть новые данные на сервер
+const postData = (id: string) => {
+  return (dispatch) => {
+    const storeOnSave = store.getState();
+    const data = storeOnSave.data.values[id]
+    console.log(data)
+    const request = axios.post(`${config.URL}dessert`, data, options);
+    dispatch(reqSend());
+    request.then(response => {
+      try {
+        console.log(response.data)
+      } catch (e) {
+        throw e
+      } finally {
+        dispatch(resRecieved());
+      }
+    }).catch(e => {
+      console.log(e)
+    })
+  }
+}
+
 // Обновить данные на сервере
 const putData = (id: string) => {
   return (dispatch) => {
@@ -115,5 +137,5 @@ const deleteData = (id: string) => {
 }
 
 export {
-    fetchData, editData, putData, deleteData, newNode
+    fetchData, editData, putData, deleteData, newNode, postData
 };

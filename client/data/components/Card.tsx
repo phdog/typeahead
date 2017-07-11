@@ -8,10 +8,18 @@ import {
   selectId } from '../../search/selector';
 import { selectIdFromPath } from '../selector';
 import { edit, arrow } from '../../style/img/';
-
-import { triggerEdit, flushEdit, startAdd } from '../../ui/actions';
+import {
+  triggerEdit,
+  flushEdit,
+  startAdd } from '../../ui/actions';
 import { flushSearch } from '../../search/actions';
-import { editData, putData, fetchData, deleteData, newNode } from '../actions';
+import {
+  editData,
+  putData,
+  fetchData,
+  deleteData,
+  newNode,
+  postData } from '../actions';
 
 import Buttons from './Buttons';
 
@@ -36,6 +44,7 @@ interface DispatchProps {
   flushSearch: Function;
   newNode: Function;
   startAdd: Function;
+  postData: Function;
 }
 
 class Card extends React.Component<IState & DispatchProps, void> {
@@ -109,7 +118,7 @@ private handleKeyPress = (target) => {
   }
 
   render() {
-    const { search, putData, id, fetchData, deleteData, loading, add } = this.props
+    const { search, putData, id, fetchData, deleteData, loading, add, postData } = this.props
     if  ((!search.mode && search.value && !loading) || add ) {
       return (
         <div className='card'>
@@ -148,12 +157,17 @@ private handleKeyPress = (target) => {
             </tr>
             </tbody>
           </table>
-        <Buttons
+      {add ? <Buttons
           name1='Restore'
           name2='Save'
           id={id}
           func1={fetchData}
-          func2={putData} />
+          func2={postData} /> : <Buttons
+              name1='Restore'
+              name2='Save'
+              id={id}
+              func1={fetchData}
+              func2={putData} />}
         </form>
 
         </div>
@@ -184,7 +198,8 @@ const mapDispatchToProps = (dispatch: Dispatch<{}>): DispatchProps => ({
   deleteData: (id: string) => {dispatch(deleteData(id))},
   flushSearch: () => {dispatch(flushSearch())},
   newNode: () => {dispatch(newNode())},
-  startAdd: () => {dispatch(startAdd())}
+  startAdd: () => {dispatch(startAdd())},
+  postData: (id: string) => {dispatch(postData(id))}
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Card);

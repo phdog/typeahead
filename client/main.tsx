@@ -5,12 +5,14 @@ import { Provider } from 'react-redux';
 import { Router, browserHistory } from 'react-router';
 import { syncHistoryWithStore } from 'react-router-redux';
 import ReduxThunk from 'redux-thunk';
+import { stateTransformer } from 'redux-seamless-immutable';
 import { createLogger } from 'redux-logger';
 
 import App from './main/components/App';
 import rootReducer from './main/reducer';
 
 const loggerMiddleware = createLogger({
+  stateTransformer,
   collapsed: (getState, action, logEntry) => !logEntry.error
 });
 
