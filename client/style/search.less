@@ -32,7 +32,7 @@ input[type="text"]:disabled {
   box-sizing: border-box;
 }
 
-.menu a {
+.menu li {
   display: block;
   padding: 12px;
   text-decoration: none;
@@ -42,15 +42,18 @@ input[type="text"]:disabled {
   cursor: pointer;
 }
 
-.menu a:hover, .menu__active {
+.menu li:hover, .menu__active {
   background-color: lightgrey;
   color: white;
+}
+
+.menu a {
+  text-decoration: none;
 }
 
 .search {
 }
 
 .find {
-  position: absolute;
-  z-index: 1;
+
 }

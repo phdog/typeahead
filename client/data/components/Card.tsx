@@ -1,25 +1,29 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { Dispatch } from 'redux';
-import { selectSearchValue, getSearchValue, getSearchData } from '../../search/selector';
+import { selectSearchValue, getSearchValue, getSearchData, selectFindData } from '../../search/selector';
 
-import { triggerEdit } from '../../ui/actions';
+import { triggerEdit, flushEdit } from '../../ui/actions';
 import { editData } from '../actions';
 
-interface CardProps {
+interface IState {
   id: string;
   value: {name: string, recipe: string};
   field: string;
-  data: {}
+  data: {};
+  search: { mode: boolean };
+  findData: [{}];
 }
 
 interface DispatchProps {
   triggerEdit: Function;
   editData: Function;
+  flushEdit: Function;
 }
 
-class Card extends React.Component<CardProps & DispatchProps, void> {
+class Card extends React.Component<IState & DispatchProps, void> {
 
+// Отрисовать иконку поля редактирование в разных режимах
   private renderIcon(field) {
 
   }
@@ -34,6 +38,7 @@ class Card extends React.Component<CardProps & DispatchProps, void> {
           name={field}
           value={value[form_field]}
           onChange={this.handleInput}
+          onKeyPress={this.handleKeyPress}
         />
       );
     } else {
@@ -41,7 +46,15 @@ class Card extends React.Component<CardProps & DispatchProps, void> {
     }
   }
 
-// Редактирование данных в Сторе
+// Завершить редактирование при нажатии Enter
+private handleKeyPress = (target) => {
+  const { flushEdit } = this.props;
+  if (target.charCode === 13) {
+    flushEdit();
+  }
+}
+
+// Изменение данных в Сторе
   private handleInput = (e) => {
     const { field, id, editData } = this.props;
     editData({
@@ -62,8 +75,9 @@ class Card extends React.Component<CardProps & DispatchProps, void> {
   }
 
   render() {
-    const { value } = this.props;
+    const { value, search } = this.props;
     return (
+      !search.mode && value &&
       <form className='card'>
       <table>
       <tbody>
@@ -85,6 +99,8 @@ class Card extends React.Component<CardProps & DispatchProps, void> {
 }
 
 const mapStateToProps = (state) => ({
+  search: state.search,
+  findData: selectFindData(state),
   id: getSearchValue(state),
   value: selectSearchValue(state),
   field: state.ui.field,
@@ -93,7 +109,8 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch: Dispatch<{}>): DispatchProps => ({
   triggerEdit: (field: string) => {dispatch(triggerEdit(field))},
-  editData: (data: {}) => {dispatch(editData(data))}
+  editData: (data: {}) => {dispatch(editData(data))},
+  flushEdit: () => {dispatch(flushEdit())}
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Card);

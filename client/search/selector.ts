@@ -8,9 +8,9 @@ export const getSearchValue = state => state.search.value;
 export const getSearchData = state => state.data;
 export const getUIData = state => state.ui;
 export const getSearchField = () => 'name';
-//May also implement combinations of search fields;
+// Можно реализовать поиск по комбинированных полям (тэги например)
 
-// Retrieve search data from store as an array of objects with ids and field values;
+// Привести данные из Стора к формату поиска. Массив объектов с id и значениями полей для поиска
 export const selectSearchData = createSelector(getSearchData, getSearchField, (data, searchField) => {
   if (data && data.keys && data.keys.length > 0) {
     let dataArr = [];
@@ -23,7 +23,7 @@ export const selectSearchData = createSelector(getSearchData, getSearchField, (d
   }
 })
 
-// Filter out typeahead data from searchData, trim output
+// Фильтр данных по поисковой фразе. Обрезка длинны списка.
 export const selectFindData = createSelector(selectSearchData, getSearchText, getSearchMode, (searchData, text, mode) => {
   const maxItems = 7;
   if (searchData && text && mode) {
@@ -34,7 +34,7 @@ export const selectFindData = createSelector(selectSearchData, getSearchText, ge
     })
     if (matchArr.length > maxItems) { return slice(matchArr, 0, maxItems) }
     else { return matchArr }
-// Input is untouched
+// Ввод не трогали
   } else if (searchData && mode && !text) {
     if (searchData.length > maxItems) { return slice(searchData, 0, maxItems) }
     else { return searchData }
@@ -42,7 +42,7 @@ export const selectFindData = createSelector(selectSearchData, getSearchText, ge
   else { return []}
 })
 
-// Return resulting search object
+// Вернуть результирующий объект поиска целиком
 export const selectSearchValue = createSelector(getSearchValue, getSearchData, (key, data) => {
   if (key && data && data.values) {
     return data.values[key]
@@ -51,7 +51,7 @@ export const selectSearchValue = createSelector(getSearchValue, getSearchData, (
   }
 })
 
-// Calculate and trim active index in list of output data
+// Вычислить активный индекс на основе сформированного списка данных
 export const selectActiveIndex = createSelector(getSearchItem, selectFindData, (item, findData) => {
   let Item;
   const min = 1;
@@ -61,15 +61,19 @@ export const selectActiveIndex = createSelector(getSearchItem, selectFindData, (
   if (Item < 0) { return Math.abs(Item + range) } else { return Math.abs(Item) }
 })
 
-// Return active value on index from list og output data
+// Вернуть активное значение по активному индексу
 export const selectActive = createSelector(selectActiveIndex, selectFindData, (activeIndex, findData) => {
   if (findData) { return findData[activeIndex] } else { return {}}
 })
 
-// Return valid placeholder value
+// Вернуть значение плейсхолдера для поля ввода
 export const selectPlaceholder = createSelector(getUIData, getSearchValue, selectSearchValue, selectActive, getSearchMode, getSearchField, (ui, searchValue, selectSearchValue, active, mode, field) => {
-  if (ui.loading) { return 'Loading...' }
+  // Если идет загрузка
+  if (ui.loading) { return 'Загружаю...' }
+  // Есть выбранное значение но нет активного элемета
   else if ( searchValue && !active ) { return selectSearchValue[field] }
+  // Есть активный элемент в режиме редактирования
   else if (active && mode) { return active.value}
-  else { return 'Search...'}
+  // Серч, просто серч
+  else { return 'Начните набирать фразу'}
 })

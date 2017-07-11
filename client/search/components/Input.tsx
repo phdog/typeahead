@@ -1,12 +1,19 @@
 import * as React from 'react';
 import { Dispatch } from 'redux';
 import { connect } from 'react-redux';
+import { browserHistory } from 'react-router';
 import { model } from '../index';
 import * as action from '../constants/ActionTypes';
+
 import {
   getSearchData,
   selectActive,
-  selectPlaceholder } from '../selector';
+  selectPlaceholder,
+  getSearchValue } from '../selector';
+
+import {
+  selectIdFromPath } from '../../data/selector';
+
 import {
   triggerSearch,
   startSearch,
@@ -15,12 +22,14 @@ import {
   searchUp,
   searchDown } from '../actions';
 
-interface SearchTextInputProps {
+interface IState {
   dispatch: Dispatch<{}>;
   placeholder: string;
   search: model.Search;
   active: {key: string, value: string};
   loading: boolean;
+  idPath: string;
+  id: string;
 }
 
 interface DispatchProps {
@@ -32,15 +41,18 @@ interface DispatchProps {
   searchDown: Function;
 }
 
-class SearchTextInput extends React.Component<SearchTextInputProps & DispatchProps, void> {
+class SearchTextInput extends React.Component<IState & DispatchProps, void> {
 
   private handleKeyDown = (e) => {
       const { active, flushSearch, pickSearch, searchUp, searchDown } = this.props;
       switch(e.keyCode) {
         case 13: //Enter
           e.preventDefault();
-          pickSearch(active.key)
-          flushSearch();
+          if (active.key) {
+            browserHistory.push(active.key);
+            pickSearch(active.key)
+            flushSearch();
+          }
           break;
         case 40:
           searchUp();
@@ -62,6 +74,15 @@ class SearchTextInput extends React.Component<SearchTextInputProps & DispatchPro
   private handleFocus = () => {
     const { startSearch } = this.props;
     startSearch();
+  }
+
+  componentWillMount() {
+    const { idPath, id } = this.props;
+    if (idPath !== id ) {
+      console.log('path', idPath)
+      console.log('select', id)
+      console.log('PUSH')
+    }
   }
 
   render() {
@@ -89,7 +110,9 @@ const mapStateToProps = (state) => ({
     placeholder: selectPlaceholder(state),
     search: state.search,
     loading: state.ui.loading,
-    active: selectActive(state)
+    active: selectActive(state),
+    idPath: selectIdFromPath(state),
+    id: getSearchValue(state)
 })
 
 const mapDispatchToProps = (dispatch: Dispatch<{}>): DispatchProps => ({

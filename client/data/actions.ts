@@ -2,7 +2,9 @@ import axios from 'axios';
 import { map } from 'lodash';
 import * as action from './constants/ActionTypes';
 import { resSend, reqRecieved } from '../ui/actions';
+import { pickSearch } from '../search/actions';
 import config from './constants/config';
+import { store } from '../main';
 
 const options = {
   headers: { 'Content-Type': 'application/json' },
@@ -27,8 +29,14 @@ const fetchData = () => {
         map(response.data, (obj: IDataObj) => {
           Object.defineProperty(values, obj.id, {value: obj, enumerable: true});
         });
-        //--------------
+        // Задвинуть данные в Стор
         dispatch(pushData({keys, values}));
+        // актуализировать состояние по пути
+        const storeOnLoad = store.getState();
+        const [,idPath] = storeOnLoad.routing.locationBeforeTransitions.pathname.split('/')
+        if (idPath) {
+          store.dispatch(pickSearch(idPath))
+        }
       } catch (e) {
         throw e
       } finally {

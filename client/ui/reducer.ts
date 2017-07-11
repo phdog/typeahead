@@ -17,6 +17,8 @@ export default function(state = INITIAL_STATE, action) {
         return { ...state, loading: false }
       case TRIGGER_EDIT:
         return { ...state, field: action.payload }
+      case FLUSH_EDIT:
+        return { ...state, field: '' }
     }
   return state;
 }
