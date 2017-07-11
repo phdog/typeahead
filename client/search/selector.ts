@@ -69,11 +69,11 @@ export const selectActive = createSelector(selectActiveIndex, selectFindData, (a
 // Вернуть значение плейсхолдера для поля ввода
 export const selectPlaceholder = createSelector(getUIData, getSearchValue, selectSearchValue, selectActive, getSearchMode, getSearchField, (ui, searchValue, selectSearchValue, active, mode, field) => {
   // Если идет загрузка
-  if (ui.loading) { return 'Загружаю...' }
+  if (ui.loading) { return 'Loading...' }
   // Есть выбранное значение но нет активного элемета
   else if ( searchValue && !active ) { return selectSearchValue[field] }
   // Есть активный элемент в режиме редактирования
   else if (active && mode) { return active.value}
   // Серч, просто серч
-  else { return 'Начните набирать фразу'}
+  else { return 'Start typing...'}
 })

@@ -4,7 +4,9 @@ import { Dispatch } from 'redux';
 import { selectSearchValue, getSearchValue, getSearchData, selectFindData } from '../../search/selector';
 
 import { triggerEdit, flushEdit } from '../../ui/actions';
-import { editData } from '../actions';
+import { editData, putData, fetchData, deleteData } from '../actions';
+
+import Buttons from './Buttons';
 
 interface IState {
   id: string;
@@ -19,6 +21,9 @@ interface DispatchProps {
   triggerEdit: Function;
   editData: Function;
   flushEdit: Function;
+  putData: Function;
+  fetchData: Function;
+  deleteData: Function;
 }
 
 class Card extends React.Component<IState & DispatchProps, void> {
@@ -75,10 +80,17 @@ private handleKeyPress = (target) => {
   }
 
   render() {
-    const { value, search } = this.props;
+    const { value, search, putData, id, fetchData, deleteData } = this.props;
     return (
       !search.mode && value &&
       <form className='card'>
+      <Buttons
+        mod='__lite'
+        name1='Add new'
+        name2='Delete'
+        id={id}
+        func1={putData}
+        func2={deleteData} />
       <table>
       <tbody>
         <tr>
@@ -93,6 +105,12 @@ private handleKeyPress = (target) => {
         </tr>
         </tbody>
       </table>
+      <Buttons
+        name1='Restore'
+        name2='Save'
+        id={id}
+        func1={fetchData}
+        func2={putData} />
       </form>
     );
   }
@@ -110,7 +128,10 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch: Dispatch<{}>): DispatchProps => ({
   triggerEdit: (field: string) => {dispatch(triggerEdit(field))},
   editData: (data: {}) => {dispatch(editData(data))},
-  flushEdit: () => {dispatch(flushEdit())}
+  flushEdit: () => {dispatch(flushEdit())},
+  putData: (payload: string) => {dispatch(putData(payload))},
+  fetchData: () => {dispatch(fetchData())},
+  deleteData: (id: string) => {dispatch(deleteData(id))}
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Card);

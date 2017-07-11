@@ -1,40 +1,34 @@
 {
   "dessert": [
-    { "id": "e9732d18888",
-      "name": "конфеты",
-      "recipe": "Купить в магазине"
+    {
+      "id": "e8a15d12ebe",
+      "name": "chocolate",
+      "recipe": "Go get one from a shop"
     },
-    { "id": "e9a35d17882",
-      "name": "торт",
-      "recipe": "Мука, яйца, сахар"
+    {
+      "id": "e9a35d17882",
+      "name": "cake",
+      "recipe": "Flour, eggs, sugar"
     },
-    { "id": "e8a15d1eeee",
-      "name": "пирог",
-      "recipe": "Попросить бабушку испечь"
+    {
+      "id": "e5a46d12ebe",
+      "name": "cup cake",
+      "recipe": "Almost like a cake"
     },
-    { "id": "e8a15d12ebe",
-      "name": "шоколад",
-      "recipe": "Наверное лучше пойти купить в магазине"
+    {
+      "id": "e5a46a19e5e",
+      "name": "cotton candy",
+      "recipe": "You need a lot of sugar"
     },
-    { "id": "e5a46d12ebe",
-      "name": "кекс",
-      "recipe": "Примерно то же, что и пирог"
+    {
+      "id": "e5a46719e58",
+      "name": "marmalade",
+      "recipe": "Jelly thingzzz"
     },
-    { "id": "e5a46a19e5e",
-      "name": "халва",
-      "recipe": "Арахис, подсолнечник и что-то еще"
-    },
-    { "id": "e5a46719e58",
-      "name": "пастила",
-      "recipe": "Можно приготовить в домашних условиях"
-    },
-    { "id": "25a46719e59",
-      "name": "мороженое",
-      "recipe": "Сливки свежие"
-    },
-    { "id": "35a46719e60",
-      "name": "финики сушеные",
-      "recipe": "Вырастить, засушить"
+    {
+      "id": "25a46719e59",
+      "name": "ice cream",
+      "recipe": "Frozen cream"
     }
   ]
 }

@@ -1,8 +1,9 @@
 import axios from 'axios';
 import { map } from 'lodash';
+import { browserHistory } from 'react-router';
 import * as action from './constants/ActionTypes';
-import { resSend, reqRecieved } from '../ui/actions';
-import { pickSearch } from '../search/actions';
+import { reqSend, resRecieved } from '../ui/actions';
+import { pickSearch, flushSearch } from '../search/actions';
 import config from './constants/config';
 import { store } from '../main';
 
@@ -20,7 +21,7 @@ interface IDataObj {
 const fetchData = () => {
   return (dispatch) => {
     const request = axios.get(`${config.URL}dessert`, options);
-    dispatch(resSend());
+    dispatch(reqSend());
     request.then((response) => {
       try {
         // Нормализовать данные. Массив из ID и объекты с ключами ID
@@ -40,7 +41,7 @@ const fetchData = () => {
       } catch (e) {
         throw e
       } finally {
-        dispatch(reqRecieved());
+        dispatch(resRecieved());
       }
     }).catch(e => {
       console.log(e)
@@ -58,6 +59,54 @@ const editData = (data) => ({
   payload: data
 })
 
+// Обновить данные на сервере
+const putData = (id: string) => {
+  return (dispatch) => {
+    const storeOnSave = store.getState();
+    const data = storeOnSave.data.values[id];
+    const request = axios.put(`${config.URL}dessert/${id}`, data, options);
+    dispatch(reqSend());
+    request.then(response => {
+      try {
+        console.log(response.data)
+      } catch (e) {
+        throw e
+      } finally {
+        dispatch(resRecieved());
+      }
+    }).catch(e => {
+      console.log(e)
+    })
+  }
+}
+
+const deleteData = (id: string) => {
+  return (dispatch) => {
+    const request = axios.delete(`${config.URL}dessert/${id}`, options)
+    dispatch(reqSend());
+    request.then(response => {
+      try {
+        dispatch(flushSearch())
+        browserHistory.push('/');
+        const storeOnChange = store.getState();
+        console.log('before', storeOnChange)
+        //delete storeOnChange.data.values[id];
+        let index = storeOnChange.data.keys.indexOf(id);
+        console.log(index)
+        storeOnChange.data.keys.splice(index, 1)
+        console.log('after', storeOnChange)
+        //dispatch(pushData(storeOnChange));
+      } catch (e) {
+        throw e
+      } finally {
+        dispatch(resRecieved());
+      }
+    }).catch(e => {
+      console.log(e.message)
+    })
+  }
+}
+
 export {
-    fetchData, editData
+    fetchData, editData, putData, deleteData
 };

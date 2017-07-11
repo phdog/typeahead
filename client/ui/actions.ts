@@ -1,7 +1,7 @@
 import * as action from './constants/ActionTypes';
 
-const resSend = () => ({ type: action.REQ_SEND });
-const reqRecieved = () => ({ type: action.RES_RECIEVED });
+const reqSend = () => ({ type: action.REQ_SEND });
+const resRecieved = () => ({ type: action.RES_RECIEVED });
 const flushEdit = () => ({ type: action.FLUSH_EDIT });
 
 const triggerEdit = (field) => ({
@@ -10,8 +10,8 @@ const triggerEdit = (field) => ({
 })
 
 export {
-  resSend,
-  reqRecieved,
+  reqSend,
+  resRecieved,
   triggerEdit,
   flushEdit
 }

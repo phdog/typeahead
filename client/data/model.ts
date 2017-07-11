@@ -1,1 +1,1 @@
-export type Data = { id: string, name: string, recipe: string };
+export type Data = { values: {}, keys: string[] };
