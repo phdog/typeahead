@@ -1,7 +1,7 @@
 import { Dispatch } from 'redux';
 import { connect } from 'react-redux';
 import * as React from 'react';
-import { flushSearch } from '../../search/actions';
+import { stopSearch } from '../../search/actions';
 import { fetchData } from '../../data/actions';
 import {
   Input,
@@ -13,7 +13,7 @@ import { Card } from '../../data';
 
 interface DispatchProps {
   fetchData: Function;
-  flushSearch: Function;
+  stopSearch: Function;
 }
 
 class App extends React.Component<DispatchProps, void> {
@@ -24,8 +24,8 @@ class App extends React.Component<DispatchProps, void> {
   }
 
   handleMouseDown = (e) => {
-    const { flushSearch } = this.props;
-    e.target.className.includes('menu') || flushSearch();
+    const { stopSearch } = this.props;
+    e.target.className.includes('menu') || stopSearch();
   }
 
   render() {
@@ -50,7 +50,7 @@ class App extends React.Component<DispatchProps, void> {
 
 const mapDispatchToProps = (dispatch: Dispatch<{}>): DispatchProps => ({
   fetchData: () => { dispatch(fetchData()); },
-  flushSearch: () => { dispatch(flushSearch()); }
+  stopSearch: () => { dispatch(stopSearch()); }
 });
 
 export default connect(null, mapDispatchToProps)(App);

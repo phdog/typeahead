@@ -5,12 +5,14 @@
     "target": "es5",
     "jsx": "react",
     "sourceMap": true,
+    "allowJs": true,
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "outDir": "dist"
   },
   "exclude": [
     "dist",
-    "node_modules"
+    "node_modules",
+    "build"
   ]
 }

@@ -3,6 +3,7 @@ import {
   START_SEARCH,
   TRIGGER_SEARCH,
   PICK_SEARCH,
+  STOP_SEARCH,
   FLUSH_SEARCH,
   SEARCH_UP,
   SEARCH_DOWN
@@ -23,8 +24,10 @@ export default function(state = INITIAL_STATE, action) {
       return { ...state, text: action.payload, mode: true };
     case PICK_SEARCH:
       return { ...state, value: action.payload };
-    case FLUSH_SEARCH:
+    case STOP_SEARCH:
       return { ...state, text: '', item: 0, mode: false };
+    case FLUSH_SEARCH:
+      return { ...state, text: '', item: 0, mode: false, value: '' };
     case SEARCH_UP:
       return { ...state, item: state.item + 1, mode: true };
     case SEARCH_DOWN:

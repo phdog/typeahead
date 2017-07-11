@@ -17,7 +17,7 @@ import {
 import {
   triggerSearch,
   startSearch,
-  flushSearch,
+  stopSearch,
   pickSearch,
   searchUp,
   searchDown } from '../actions';
@@ -35,7 +35,7 @@ interface IState {
 interface DispatchProps {
   triggerSearch: Function;
   startSearch: Function;
-  flushSearch: Function;
+  stopSearch: Function;
   pickSearch: Function;
   searchUp: Function;
   searchDown: Function;
@@ -44,14 +44,14 @@ interface DispatchProps {
 class SearchTextInput extends React.Component<IState & DispatchProps, void> {
 
   private handleKeyDown = (e) => {
-      const { active, flushSearch, pickSearch, searchUp, searchDown } = this.props;
+      const { active, stopSearch, pickSearch, searchUp, searchDown } = this.props;
       switch(e.keyCode) {
         case 13: //Enter
           e.preventDefault();
           if (active.key) {
             browserHistory.push(active.key);
             pickSearch(active.key)
-            flushSearch();
+            stopSearch();
           }
           break;
         case 40:
@@ -61,7 +61,7 @@ class SearchTextInput extends React.Component<IState & DispatchProps, void> {
           searchDown();
           break;
         case 27: //Escape
-        flushSearch();
+        stopSearch();
           break;
       }
     }
@@ -74,15 +74,6 @@ class SearchTextInput extends React.Component<IState & DispatchProps, void> {
   private handleFocus = () => {
     const { startSearch } = this.props;
     startSearch();
-  }
-
-  componentWillMount() {
-    const { idPath, id } = this.props;
-    if (idPath !== id ) {
-      console.log('path', idPath)
-      console.log('select', id)
-      console.log('PUSH')
-    }
   }
 
   render() {
@@ -118,7 +109,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch: Dispatch<{}>): DispatchProps => ({
   triggerSearch: (text: string) => { dispatch(triggerSearch(text)); },
   startSearch: () => { dispatch(startSearch()); },
-  flushSearch: () => { dispatch(flushSearch()); },
+  stopSearch: () => { dispatch(stopSearch()); },
   pickSearch: (text: string) => { dispatch(pickSearch(text)); },
   searchUp: () => { dispatch(searchUp()); },
   searchDown: () => { dispatch(searchDown()); }

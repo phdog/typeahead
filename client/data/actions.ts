@@ -86,17 +86,10 @@ const deleteData = (id: string) => {
     dispatch(reqSend());
     request.then(response => {
       try {
-        dispatch(flushSearch())
         browserHistory.push('/');
-        const storeOnChange = store.getState();
-        console.log('before', storeOnChange)
-        //delete storeOnChange.data.values[id];
-        let index = storeOnChange.data.keys.indexOf(id);
-        console.log(index)
-        storeOnChange.data.keys.splice(index, 1)
-        console.log('after', storeOnChange)
-        //dispatch(pushData(storeOnChange));
-      } catch (e) {
+        dispatch(flushSearch());
+        dispatch(fetchData());
+        } catch (e) {
         throw e
       } finally {
         dispatch(resRecieved());

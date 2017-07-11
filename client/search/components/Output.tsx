@@ -5,7 +5,7 @@ import { Link } from 'react-router';
 import * as action from '../constants/ActionTypes';
 import { model } from '../index';
 import { selectFindData, selectActiveIndex, selectActive } from '../selector';
-import { pickSearch, flushSearch } from '../actions';
+import { pickSearch, stopSearch } from '../actions';
 
 interface IState {
   dispatch: Dispatch<{}>;
@@ -17,15 +17,15 @@ interface IState {
 
 interface DispatchProps {
   pickSearch: Function;
-  flushSearch: Function;
+  stopSearch: Function;
 }
 
 class SearchTextOutput extends React.Component<IState & DispatchProps, void> {
 
   handleClick = (e) => {
-    const { active, pickSearch, flushSearch }  = this.props;
+    const { active, pickSearch, stopSearch }  = this.props;
     pickSearch(e.target.getAttribute('value'));
-    flushSearch();
+    stopSearch();
   }
 
   render() {
@@ -64,7 +64,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch: Dispatch<{}>): DispatchProps => ({
   pickSearch: (text: string) => { dispatch(pickSearch(text)); },
-  flushSearch: () => { dispatch(flushSearch()); }
+  stopSearch: () => { dispatch(stopSearch()); }
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(SearchTextOutput);

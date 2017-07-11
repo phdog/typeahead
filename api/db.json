@@ -3,17 +3,7 @@
     {
       "id": "e8a15d12ebe",
       "name": "chocolate",
-      "recipe": "Go get one from a shop"
-    },
-    {
-      "id": "e9a35d17882",
-      "name": "cake",
-      "recipe": "Flour, eggs, sugar"
-    },
-    {
-      "id": "e5a46d12ebe",
-      "name": "cup cake",
-      "recipe": "Almost like a cake"
+      "recipe": "Go get one from a store"
     },
     {
       "id": "e5a46a19e5e",
@@ -23,7 +13,7 @@
     {
       "id": "e5a46719e58",
       "name": "marmalade",
-      "recipe": "Jelly thingzzz"
+      "recipe": "Jelly things"
     },
     {
       "id": "25a46719e59",
