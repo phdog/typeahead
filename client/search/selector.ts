@@ -85,6 +85,8 @@ export const selectPlaceholder = createSelector(getUIData, getSearchValue, selec
   else if ( searchValue && !active ) { return selectSearchValue[field] }
   // Есть активный элемент в режиме редактирования
   else if (active && mode) { return active.value}
+  // Режим ввода нового элемента
+  else if (ui.add) { return 'Enter new item below... or start new search'}
   // Серч, просто серч
   else { return 'Start typing...'}
 })

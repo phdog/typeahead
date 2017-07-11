@@ -9,7 +9,7 @@ import {
 } from './constants/ActionTypes';
 
 
-const INITIAL_STATE = { loading: false, field: '', add: false }
+const INITIAL_STATE: UI = <UI>{ loading: false, field: '', add: false }
 
 export default function(state = INITIAL_STATE, action) {
     switch(action.type) {

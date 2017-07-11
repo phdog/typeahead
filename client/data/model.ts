@@ -1,1 +1,4 @@
-export type Data = { values: {}, keys: string[] };
+export type Data = {
+  values: {};
+  keys: string[]; 
+};

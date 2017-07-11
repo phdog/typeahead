@@ -3,7 +3,7 @@ import { map } from 'lodash';
 import * as Chance from 'chance';
 import { browserHistory } from 'react-router';
 import * as action from './constants/ActionTypes';
-import { reqSend, resRecieved } from '../ui/actions';
+import { reqSend, resRecieved, stopAdd, flushEdit } from '../ui/actions';
 import { pickSearch, flushSearch } from '../search/actions';
 import config from './constants/config';
 import { store } from '../main';
@@ -71,16 +71,19 @@ const newNode = () => {
   }
 }
 
-// Закинуть новые данные на сервер
+// Закинуть новые данные на сервер - создание новой записи
 const postData = (id: string) => {
   return (dispatch) => {
     const storeOnSave = store.getState();
     const data = storeOnSave.data.values[id]
-    console.log(data)
     const request = axios.post(`${config.URL}dessert`, data, options);
     dispatch(reqSend());
     request.then(response => {
       try {
+        dispatch(stopAdd());
+        dispatch(flushEdit());
+        dispatch(pickSearch(id))
+        //Если настроить АПИ сервер.. то здесь отлавливать сообщения и оповещать юзера
         console.log(response.data)
       } catch (e) {
         throw e
@@ -98,7 +101,6 @@ const putData = (id: string) => {
   return (dispatch) => {
     const storeOnSave = store.getState();
     const data = storeOnSave.data.values[id];
-    console.log(data)
     const request = axios.put(`${config.URL}dessert/${id}`, data, options);
     dispatch(reqSend());
     request.then(response => {

@@ -1,3 +1,5 @@
 export type UI = {
-  loading: boolean
+  loading: boolean;
+  add: boolean;
+  field: string;
 }

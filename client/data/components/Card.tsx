@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
+import { browserHistory } from 'react-router';
 import { Dispatch } from 'redux';
 import {
   selectSearchValue,
@@ -11,7 +12,8 @@ import { edit, arrow } from '../../style/img/';
 import {
   triggerEdit,
   flushEdit,
-  startAdd } from '../../ui/actions';
+  startAdd,
+  stopAdd } from '../../ui/actions';
 import { flushSearch } from '../../search/actions';
 import {
   editData,
@@ -44,6 +46,7 @@ interface DispatchProps {
   flushSearch: Function;
   newNode: Function;
   startAdd: Function;
+  stopAdd: Function;
   postData: Function;
 }
 
@@ -110,11 +113,18 @@ private handleKeyPress = (target) => {
 
 // Добавить новый элемент в список
   private addNew = () => {
-    const { flushEdit, flushSearch, newNode, startAdd } = this.props;
-    flushEdit();
-    flushSearch();
-    startAdd();
-    newNode();
+    const { flushEdit, flushSearch, newNode, startAdd, stopAdd, add, id, fetchData } = this.props;
+    if (!add) {
+      flushEdit();
+      flushSearch();
+      startAdd();
+      newNode();
+    } else {
+      browserHistory.goBack();
+      stopAdd();
+      flushEdit();
+      fetchData();
+    }
   }
 
   render() {
@@ -122,13 +132,23 @@ private handleKeyPress = (target) => {
     if  ((!search.mode && search.value && !loading) || add ) {
       return (
         <div className='card'>
-        <Buttons
-          mod='__lite'
+
+        { add ? <Buttons
+          mod1='__active'
+          mod2='__disabled'
           name1='Add new'
-          name2='Delete'
+          name2=''
           id={id}
           func1={this.addNew}
-          func2={deleteData} />
+           /> :
+          <Buttons
+            mod1='__lite'
+            mod2='__lite'
+            name1='Add new'
+            name2='Delete'
+            id={id}
+            func1={this.addNew}
+            func2={deleteData} /> }
 
         <form>
         <table>
@@ -158,10 +178,10 @@ private handleKeyPress = (target) => {
             </tbody>
           </table>
       {add ? <Buttons
-          name1='Restore'
+          mod1='__disabled'
+          name1=''
           name2='Save'
           id={id}
-          func1={fetchData}
           func2={postData} /> : <Buttons
               name1='Restore'
               name2='Save'
@@ -199,6 +219,7 @@ const mapDispatchToProps = (dispatch: Dispatch<{}>): DispatchProps => ({
   flushSearch: () => {dispatch(flushSearch())},
   newNode: () => {dispatch(newNode())},
   startAdd: () => {dispatch(startAdd())},
+  stopAdd: () => {dispatch(stopAdd())},
   postData: (id: string) => {dispatch(postData(id))}
 })
 
