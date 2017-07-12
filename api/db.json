@@ -8,7 +8,7 @@
     {
       "id": "78dc8a7e-8e77-57b8-9067-cb74f9d3a10b",
       "name": "cotton candy",
-      "recipe": "you need a lot of sugarsf"
+      "recipe": "you need a lot of sugar"
     },
     {
       "id": "9daa6d46-6658-5f45-981c-067202135516",
@@ -64,6 +64,11 @@
       "id": "14b56c12-5557-563c-87a0-d4a2c59c14b3",
       "name": "muffins",
       "recipe": "almost like cupcakes"
+    },
+    {
+      "id": "9e84a003-4437-592d-93e4-bae414e1624f",
+      "name": "Ginger ale",
+      "recipe": "refresh !"
     }
   ]
 }

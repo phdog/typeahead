@@ -52,16 +52,6 @@ export const selectSearchValue = createSelector(getSearchValue, getSearchData, (
   }
 })
 
-// Вычислить какой ID использовать - имеющийся или сгенерировать новый
-export const selectId = createSelector(getSearchValue, selectIdFromPath, getSearchMode, (valueId, pathId, mode) => {
-   /*if (pathId === 'add' && !mode) {
-    const id = keygen.hex(keygen.small)
-    return id;
-  } else { */
-    return valueId;
-//  }
-})
-
 // Вычислить активный индекс на основе сформированного списка данных
 export const selectActiveIndex = createSelector(getSearchItem, selectFindData, (item, findData) => {
   let Item;

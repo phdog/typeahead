@@ -5,8 +5,8 @@ import { Dispatch } from 'redux';
 import {
   selectSearchValue,
   getSearchData,
-  selectFindData,
-  selectId } from '../../search/selector';
+  selectFindData
+   } from '../../search/selector';
 import { selectIdFromPath } from '../selector';
 import { edit, arrow } from '../../style/img/';
 import {
