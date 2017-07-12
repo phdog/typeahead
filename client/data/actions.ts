@@ -17,7 +17,7 @@ interface IDataObj {
   id: string;
   name: string;
   recipe: string;
-}
+};
 
 const fetchData = () => {
   return (dispatch) => {
@@ -48,17 +48,17 @@ const fetchData = () => {
       console.log(e)
     })
   }
-}
+};
 
 const pushData = (data) => ({
   type: action.PUSH_DATA,
   payload: data
-})
+});
 
 const editData = (data) => ({
   type: action.EDIT_DATA,
   payload: data
-})
+});
 
 // Создать схему для нового элемента данных в Сторе, переключить режим
 const newNode = () => {
@@ -69,7 +69,7 @@ const newNode = () => {
     type: action.NEW_NODE,
     payload: { keys: [id], values: {[id]: {id, name: '', recipe: ''}}}
   }
-}
+};
 
 // Закинуть новые данные на сервер - создание новой записи
 const postData = (id: string) => {
@@ -94,7 +94,7 @@ const postData = (id: string) => {
       console.log(e)
     })
   }
-}
+};
 
 // Обновить данные на сервере
 const putData = (id: string) => {
@@ -115,7 +115,7 @@ const putData = (id: string) => {
       console.log(e)
     })
   }
-}
+};
 
 // Удалить элемент на сервере и актуализировать Стор
 const deleteData = (id: string) => {
@@ -136,7 +136,7 @@ const deleteData = (id: string) => {
       console.log(e.message)
     })
   }
-}
+};
 
 export {
     fetchData, editData, putData, deleteData, newNode, postData

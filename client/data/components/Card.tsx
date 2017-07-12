@@ -210,7 +210,7 @@ const mapStateToProps = (state) => ({
   loading: state.ui.loading,
   add: state.ui.add,
   prevID: state.ui.prevID
-})
+});
 
 const mapDispatchToProps = (dispatch: Dispatch<{}>): DispatchProps => ({
   triggerEdit: (field: string) => {dispatch(triggerEdit(field))},
@@ -225,6 +225,6 @@ const mapDispatchToProps = (dispatch: Dispatch<{}>): DispatchProps => ({
   stopAdd: () => {dispatch(stopAdd())},
   postData: (id: string) => {dispatch(postData(id))},
   pickSearch: (id: string) => {dispatch(pickSearch(id))}
-})
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(Card);
