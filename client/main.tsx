@@ -16,6 +16,7 @@ const loggerMiddleware = createLogger({
   collapsed: (getState, action, logEntry) => !logEntry.error
 });
 
+
 export const store: Store<any> = compose(applyMiddleware(ReduxThunk, loggerMiddleware))(createStore)(rootReducer);
 
 const history = syncHistoryWithStore(browserHistory, store)

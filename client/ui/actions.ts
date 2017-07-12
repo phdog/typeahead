@@ -9,7 +9,10 @@ const triggerEdit = (field) => ({
   payload: field
 })
 
-const startAdd = () => ({ type: action.START_ADD})
+const startAdd = (id) => ({
+  type: action.START_ADD,
+  payload: id
+})
 
 const stopAdd = () => ({ type: action.STOP_ADD})
 

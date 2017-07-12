@@ -9,7 +9,7 @@ import {
 } from './constants/ActionTypes';
 
 
-const INITIAL_STATE: UI = <UI>{ loading: false, field: '', add: false }
+const INITIAL_STATE: UI = <UI>{ loading: false, field: '', add: false, prevID: '' }
 
 export default function(state = INITIAL_STATE, action) {
     switch(action.type) {
@@ -22,9 +22,9 @@ export default function(state = INITIAL_STATE, action) {
       case FLUSH_EDIT:
         return { ...state, field: '' }
       case START_ADD:
-        return { ...state, add: true }
+        return { ...state, add: true, prevID: action.payload }
       case STOP_ADD:
-        return { ...state, add: false }
+        return { ...state, add: false, prevID: '' }
     }
   return state;
 }

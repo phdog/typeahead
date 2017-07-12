@@ -14,7 +14,7 @@ import {
   flushEdit,
   startAdd,
   stopAdd } from '../../ui/actions';
-import { flushSearch } from '../../search/actions';
+import { flushSearch, pickSearch } from '../../search/actions';
 import {
   editData,
   putData,
@@ -34,6 +34,7 @@ interface IState {
   findData: [{}];
   loading: boolean;
   add: boolean;
+  prevID: string;
 }
 
 interface DispatchProps {
@@ -48,6 +49,7 @@ interface DispatchProps {
   startAdd: Function;
   stopAdd: Function;
   postData: Function;
+  pickSearch: Function;
 }
 
 class Card extends React.Component<IState & DispatchProps, void> {
@@ -111,19 +113,19 @@ private handleKeyPress = (target) => {
     }
   }
 
-// Добавить новый элемент в список
+// Переключение режима добавления нового элемента
   private addNew = () => {
-    const { flushEdit, flushSearch, newNode, startAdd, stopAdd, add, id, fetchData } = this.props;
+    const { flushEdit, flushSearch, newNode, startAdd, stopAdd, add, id, pickSearch, prevID } = this.props;
     if (!add) {
       flushEdit();
       flushSearch();
-      startAdd();
+      startAdd(id);
       newNode();
     } else {
       browserHistory.goBack();
-      stopAdd();
       flushEdit();
-      fetchData();
+      pickSearch(prevID);
+      stopAdd();
     }
   }
 
@@ -206,7 +208,8 @@ const mapStateToProps = (state) => ({
   field: state.ui.field,
   data: getSearchData(state),
   loading: state.ui.loading,
-  add: state.ui.add
+  add: state.ui.add,
+  prevID: state.ui.prevID
 })
 
 const mapDispatchToProps = (dispatch: Dispatch<{}>): DispatchProps => ({
@@ -218,9 +221,10 @@ const mapDispatchToProps = (dispatch: Dispatch<{}>): DispatchProps => ({
   deleteData: (id: string) => {dispatch(deleteData(id))},
   flushSearch: () => {dispatch(flushSearch())},
   newNode: () => {dispatch(newNode())},
-  startAdd: () => {dispatch(startAdd())},
+  startAdd: (id: string) => {dispatch(startAdd(id))},
   stopAdd: () => {dispatch(stopAdd())},
-  postData: (id: string) => {dispatch(postData(id))}
+  postData: (id: string) => {dispatch(postData(id))},
+  pickSearch: (id: string) => {dispatch(pickSearch(id))}
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(Card);
