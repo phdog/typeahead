@@ -1,4 +1,4 @@
-import * as action from './constants/ActionTypes';
+import * as action from '../constants/ActionTypes';
 
 const searchUp = () => ({ type: action.SEARCH_UP })
 

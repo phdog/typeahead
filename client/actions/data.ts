@@ -2,10 +2,9 @@ import axios from 'axios';
 import { map } from 'lodash';
 import * as Chance from 'chance';
 import { browserHistory } from 'react-router';
-import * as action from './constants/ActionTypes';
-import { reqSend, resRecieved, stopAdd, flushEdit } from '../ui/actions';
-import { pickSearch, flushSearch } from '../search/actions';
-import config from './constants/config';
+import * as action from '../constants/ActionTypes';
+import { reqSend, resRecieved, stopAdd, flushEdit, pickSearch, flushSearch } from './index';
+import config from '../constants/config';
 import { store } from '../main';
 
 const options = {

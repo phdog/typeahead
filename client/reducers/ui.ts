@@ -1,4 +1,4 @@
-import { UI } from './model';
+import { UI } from '../constants/model';
 import {
   REQ_SEND,
   RES_RECIEVED,
@@ -6,7 +6,7 @@ import {
   FLUSH_EDIT,
   START_ADD,
   STOP_ADD
-} from './constants/ActionTypes';
+} from '../constants/ActionTypes';
 
 
 const INITIAL_STATE: UI = <UI>{ loading: false, field: '', add: false, prevID: '' }

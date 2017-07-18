@@ -1,6 +1,6 @@
 import { createSelector } from 'reselect';
 import { slice } from 'lodash';
-import { selectIdFromPath } from '../data/selector';
+import { selectIdFromPath } from './index';
 
 export const getSearchMode = state => state.search.mode;
 export const getSearchText = state => state.search.text;

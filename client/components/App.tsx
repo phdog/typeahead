@@ -1,15 +1,11 @@
 import { Dispatch } from 'redux';
 import { connect } from 'react-redux';
 import * as React from 'react';
-import { stopSearch } from '../../search/actions';
-import { fetchData } from '../../data/actions';
-import {
-  Input,
-  Output
-} from '../../search';
-import { selectIdFromPath } from '../../data/selector';
-import { getSearchValue } from '../../search/selector';
-import { Card } from '../../data';
+import { stopSearch, fetchData } from '../actions';
+import Input from './Input';
+import Output from './Output';
+import Card from './Card';
+import { selectIdFromPath, getSearchValue } from '../selectors';
 
 interface DispatchProps {
   fetchData: Function;

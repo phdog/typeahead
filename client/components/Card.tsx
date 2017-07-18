@@ -5,17 +5,17 @@ import { Dispatch } from 'redux';
 import {
   selectSearchValue,
   getSearchData,
-  selectFindData
-   } from '../../search/selector';
-import { selectIdFromPath } from '../selector';
-import { edit, arrow } from '../../style/img/';
+  selectFindData,
+  selectIdFromPath
+} from '../selectors';
+import { edit, arrow } from '../style/img/';
 import {
   triggerEdit,
   flushEdit,
   startAdd,
-  stopAdd } from '../../ui/actions';
-import { flushSearch, pickSearch } from '../../search/actions';
-import {
+  stopAdd,
+  flushSearch,
+  pickSearch,
   editData,
   putData,
   fetchData,

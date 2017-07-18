@@ -1,4 +1,4 @@
-import { Search } from './model';
+import { Search } from '../constants/model';
 import {
   START_SEARCH,
   TRIGGER_SEARCH,
@@ -7,7 +7,7 @@ import {
   FLUSH_SEARCH,
   SEARCH_UP,
   SEARCH_DOWN
-} from './constants/ActionTypes';
+} from '../constants/ActionTypes';
 
 const INITIAL_STATE: Search = <Search>{
   mode: false,

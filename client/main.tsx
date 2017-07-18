@@ -8,8 +8,8 @@ import ReduxThunk from 'redux-thunk';
 import { stateTransformer } from 'redux-seamless-immutable';
 import { createLogger } from 'redux-logger';
 
-import App from './main/components/App';
-import rootReducer from './main/reducer';
+import App from './components/App';
+import rootReducer from './reducers';
 
 const loggerMiddleware = createLogger({
   stateTransformer,

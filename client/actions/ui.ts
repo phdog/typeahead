@@ -1,4 +1,4 @@
-import * as action from './constants/ActionTypes';
+import * as action from '../constants/ActionTypes';
 
 const reqSend = () => ({ type: action.REQ_SEND });
 const resRecieved = () => ({ type: action.RES_RECIEVED });

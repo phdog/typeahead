@@ -2,17 +2,15 @@ import * as React from 'react';
 import { Dispatch } from 'redux';
 import { connect } from 'react-redux';
 import { browserHistory } from 'react-router';
-import { model } from '../index';
+import { Search } from '../constants/model';
 import * as action from '../constants/ActionTypes';
 
 import {
   getSearchData,
   selectActive,
   selectPlaceholder,
-  getSearchValue } from '../selector';
-
-import {
-  selectIdFromPath } from '../../data/selector';
+  getSearchValue,
+  selectIdFromPath } from '../selectors';
 
 import {
   triggerSearch,
@@ -20,14 +18,13 @@ import {
   stopSearch,
   pickSearch,
   searchUp,
-  searchDown } from '../actions';
-
-  import { stopAdd } from '../../ui/actions';
+  searchDown,
+  stopAdd } from '../actions';
 
 interface IState {
   dispatch: Dispatch<{}>;
   placeholder: string;
-  search: model.Search;
+  search: Search;
   active: {key: string, value: string};
   loading: boolean;
   idPath: string;

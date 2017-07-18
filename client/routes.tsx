@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Route, Redirect } from 'react-router';
-import App from './main/components/App';
+import App from './components/App';
 
   export default function() {
     return (

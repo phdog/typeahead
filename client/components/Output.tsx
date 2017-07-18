@@ -3,13 +3,13 @@ import { Dispatch } from 'redux';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import * as action from '../constants/ActionTypes';
-import { model } from '../index';
-import { selectFindData, selectActiveIndex, selectActive } from '../selector';
+import { Search } from '../constants/model';
+import { selectFindData, selectActiveIndex, selectActive } from '../selectors';
 import { pickSearch, stopSearch } from '../actions';
 
 interface IState {
   dispatch: Dispatch<{}>;
-  search: model.Search;
+  search: Search;
   findData: [{ key: string, value: string}];
   activeIndex: number;
   active: string;

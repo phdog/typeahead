@@ -1,12 +1,12 @@
 import * as SI from 'seamless-immutable';
 import { Immutable } from 'seamless-immutable';
 import * as mergers from 'seamless-immutable-mergers';
-import { Data } from './model';
+import { Data } from '../constants/model';
 import {
   PUSH_DATA,
   EDIT_DATA,
   NEW_NODE
-} from './constants/ActionTypes';
+} from '../constants/ActionTypes';
 
 const INITIAL_STATE: Immutable<{}> = SI.from({ keys: [], values: {}});
 
