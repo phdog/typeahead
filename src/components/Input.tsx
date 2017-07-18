@@ -9,8 +9,8 @@ import {
   getSearchData,
   selectActive,
   selectPlaceholder,
-  getSearchValue,
-  selectIdFromPath } from '../selectors';
+  getSearchValue
+} from '../selectors';
 
 import {
   triggerSearch,
@@ -27,7 +27,6 @@ interface IState {
   search: Search;
   active: {key: string, value: string};
   loading: boolean;
-  idPath: string;
   id: string;
 }
 
@@ -103,7 +102,6 @@ const mapStateToProps = (state) => ({
     search: state.search,
     loading: state.ui.loading,
     active: selectActive(state),
-    idPath: selectIdFromPath(state),
     id: getSearchValue(state)
 })
 

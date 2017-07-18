@@ -5,7 +5,7 @@ import { browserHistory } from 'react-router';
 import * as action from '../constants/ActionTypes';
 import { reqSend, resRecieved, stopAdd, flushEdit, pickSearch, flushSearch } from './index';
 import config from '../constants/config';
-import { store } from '../main';
+import { store } from '../redux';
 
 const options = {
   headers: { 'Content-Type': 'application/json' },

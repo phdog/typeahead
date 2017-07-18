@@ -5,7 +5,6 @@ import { stopSearch, fetchData } from '../actions';
 import Input from './Input';
 import Output from './Output';
 import Card from './Card';
-import { selectIdFromPath, getSearchValue } from '../selectors';
 
 interface DispatchProps {
   fetchData: Function;
