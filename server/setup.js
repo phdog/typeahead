@@ -13,7 +13,7 @@ module.exports = function (options) {
   if (isProd) {
     addProdMiddlewares(app, options);
   } else {
-    const webpackConfig = require('../internals/webpack/webpack.dev.config');
+    const webpackConfig = require('../webpack/webpack.dev.config');
     addDevMiddlewares(app, webpackConfig);
   }
 
