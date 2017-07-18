@@ -51,7 +51,7 @@ class SearchTextInput extends React.Component<IState & DispatchProps, void> {
       switch(e.keyCode) {
         case 13: //Enter
           e.preventDefault();
-          if (active.key) {
+          if (active && active.key) {
             browserHistory.push(active.key);
             pickSearch(active.key)
             stopSearch();
