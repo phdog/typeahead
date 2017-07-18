@@ -1,6 +1,6 @@
 {
-  "name": "todomvc-redux-react-ts",
-  "version": "2.1.0",
+  "name": "Cook book",
+  "version": "1.0.0",
   "description": "Typeahead example using Redux, React, and Typescript ",
   "repository": {
     "type": "git",
