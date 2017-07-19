@@ -95,9 +95,9 @@ private handleKeyPress = (target) => {
 
 // Изменение данных в Сторе
   private handleInput = (e) => {
-    let { field, id, editData } = this.props;
+    let { field, search, editData } = this.props;
     editData({
-      id,
+      id: search.value,
       field,
       value: e.target.value
     })
