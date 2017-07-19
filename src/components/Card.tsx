@@ -140,7 +140,7 @@ private handleKeyPress = (target) => {
           mod2='__disabled'
           name1='Add new'
           name2=''
-          id={id}
+          id={search.value}
           func1={this.addNew}
            /> :
           <Buttons
@@ -148,7 +148,7 @@ private handleKeyPress = (target) => {
             mod2='__lite'
             name1='Add new'
             name2='Delete'
-            id={id}
+            id={search.value}
             func1={this.addNew}
             func2={deleteData} /> }
 
@@ -183,11 +183,11 @@ private handleKeyPress = (target) => {
           mod1='__disabled'
           name1=''
           name2='Save'
-          id={id}
+          id={search.value}
           func2={postData} /> : <Buttons
               name1='Restore'
               name2='Save'
-              id={id}
+              id={search.value}
               func1={fetchData}
               func2={putData} />}
         </form>
