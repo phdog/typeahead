@@ -1,6 +1,10 @@
 import * as SI from 'seamless-immutable';
 import { Immutable } from 'seamless-immutable';
 import * as mergers from 'seamless-immutable-mergers';
+<<<<<<< HEAD:src/reducers/data.ts
+=======
+import { Data } from '../constants/model';
+>>>>>>> restructure:src/reducers/data.ts
 import {
   PUSH_DATA,
   EDIT_DATA,
