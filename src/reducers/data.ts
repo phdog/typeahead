@@ -1,7 +1,6 @@
 import * as SI from 'seamless-immutable';
 import { Immutable } from 'seamless-immutable';
 import * as mergers from 'seamless-immutable-mergers';
-import { Data } from '../constants/model';
 import {
   PUSH_DATA,
   EDIT_DATA,
