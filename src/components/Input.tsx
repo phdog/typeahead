@@ -9,13 +9,9 @@ import {
   getSearchData,
   selectActive,
   selectPlaceholder,
-<<<<<<< HEAD:src/components/Input.tsx
   getSearchValue
 } from '../selectors';
-=======
-  getSearchValue,
-  selectIdFromPath } from '../selectors';
->>>>>>> restructure:src/components/Input.tsx
+
 
 import {
   triggerSearch,

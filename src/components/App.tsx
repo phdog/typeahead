@@ -5,10 +5,7 @@ import { stopSearch, fetchData } from '../actions';
 import Input from './Input';
 import Output from './Output';
 import Card from './Card';
-<<<<<<< HEAD:src/components/App.tsx
-=======
 import { selectIdFromPath, getSearchValue } from '../selectors';
->>>>>>> restructure:src/components/App.tsx
 
 interface DispatchProps {
   fetchData: Function;
